@@ -1,4 +1,5 @@
 require "pcap_parser/version"
+require "pcap_parser/stream"
 require "pcap_parser/save_file"
 
 

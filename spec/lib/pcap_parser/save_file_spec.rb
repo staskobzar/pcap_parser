@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe SaveFile do
+describe SaveFile, focus:true do
   describe "#new" do
 
     it{expect{sample_none_pcap_file}.to raise_error(InvalidPcapFile)}
