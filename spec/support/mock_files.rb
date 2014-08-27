@@ -55,14 +55,17 @@ def sample_none_pcap_file
   new_savefile header
 end
 
-def sample_packhdr_le_msec
+def sample_packhdr_le_usec
    # ts_sec:   1406296714
    # ts_msec:  944159
    # incl_len: 358
    # orig_len: 358
-  "\x8Ab\xD2S\x1Fh\x0E\x00f\x01\x00\x00f\x01\x00\x00"
+  "\xD4\xC3\xB2\xA1" +
+  "\x8Ab\xD2S\x1Fh\x0E\x00f\x01\x00\x00f\x01\x00\x00"+
+  "\x00\x00\xFF\xFF\x00\x00\x00\x01" # padding
 end
 
-def sample_packhdr_be_msec
+def sample_packhdr_be_usec
+  "\xA1\xB2\xC3\xD4\x00\x02\x00\x04" +
   "S\xD2b\x8A\x00\x0Eh\x1F\x00\x00\x01f\x00\x00\x01f"
 end
