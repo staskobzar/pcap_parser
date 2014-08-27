@@ -13,18 +13,6 @@ module PcapParser
       set_file_attr
     end
 
-    def little_endian?
-      @stream.little_endian?
-    end
-
-    def big_endian?
-      @stream.big_endian?
-    end
-
-    def sec_subt
-      @stream.sec_subt
-    end
-
     private
       # Set up pcap file header attributes:
       # version, timezone offset, timezone accuracy,
