@@ -54,6 +54,10 @@ module PcapParser
       @file.read(len*4).unpack int32(len)
     end
 
+    def read_char(len=1)
+      @file.read(len).unpack("C*")
+    end
+
     private
       # Set magic number of file.
       def set_magic

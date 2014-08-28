@@ -6,6 +6,7 @@ module PcapParser
     attr_reader :tz_accur
     attr_reader :snaplen
     attr_reader :network
+    attr_reader :linktype
 
     # Open and read pcap file
     def initialize(filename)
@@ -38,6 +39,8 @@ module PcapParser
       # and network data link type
       def set_len_and_net
         @snaplen, @network = @stream.read_int32(2)
+        raise LinkTypeNotSupported if LINK_TYPE[@network].nil?
+        @linktype = LINK_TYPE[@network].new @stream
       end
   end
 end
