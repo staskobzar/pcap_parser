@@ -51,7 +51,7 @@ module PcapParser
     end
 
     def read_int32(len=1)
-      @file.read(len*4).unpack int32(2)
+      @file.read(len*4).unpack int32(len)
     end
 
     private
