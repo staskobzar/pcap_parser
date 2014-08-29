@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Linktype::Ethernet , focus:true do
+describe Linktype::Ethernet do
   describe "#new" do
     let(:ethernet) do
       stream=Stream.new(StringIO.new sample_linktype_ether_le_usec)
