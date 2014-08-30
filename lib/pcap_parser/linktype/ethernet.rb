@@ -29,7 +29,9 @@ module PcapParser
 
       def ether_type
         ether=@stream.little_endian? ? @ether_raw.reverse : @ether_raw
-        ether.map.with_index{|x,i| x<<(i<<3) }.inject :+
+        ethertype=ether.map.with_index{|x,i| x<<(i<<3) }.inject :+
+        raise EtherTypeNotSupported if ETHER_TYPE[ethertype].nil?
+        ethertype
       end
     end
   end

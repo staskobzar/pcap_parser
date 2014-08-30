@@ -3,12 +3,10 @@ require "pcap_parser/stream"
 require "pcap_parser/save_file"
 require "pcap_parser/packet"
 require "pcap_parser/linktype"
+require "pcap_parser/ethertype"
 
 
 module PcapParser
-  LINK_TYPE = {
-    1 => Linktype::Ethernet
-  }
   # Exceptions
 
   # Raise when pcap file is invalid
@@ -19,4 +17,7 @@ module PcapParser
 
   # Raise when link type is not supported
   class LinkTypeNotSupported < StandardError; end
+
+  # Raise when ether type is not supported
+  class EtherTypeNotSupported < StandardError; end
 end
