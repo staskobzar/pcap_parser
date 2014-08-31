@@ -85,3 +85,11 @@ def sample_linktype_ether_le_usec
   "\x00\x00\xFF\xFF\x00\x00\x00\x01" # padding
 end
 
+def sample_udp_packet
+  "\x13\xC4\x13\xC4\x01DF\x91SIP/2.0 200 OK\r\nVia: SIP/2.0/UDP 10.132.40.34:5060;branc" +
+  "h=z9hG4bK33062aaec5ca2abf9\r\nFrom: <sip:8487@campus.voip.etsmtl.c" +
+  "a>;tag=a9c94de2c7\r\nTo: <sip:7889@campus.voip.etsmtl.ca>;tag=29e0" +
+  "49bfbfc261e1c7d62e77ae8573f0.9028\r\nCall-ID: 2b12ce4a4f805824\r\nCS" +
+  "eq: 24065 SUBSCRIBE\r\nServer: ETS voip service\r\nContent-Length: 0" +
+  "\r\n\r\n"
+end

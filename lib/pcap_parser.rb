@@ -4,6 +4,7 @@ require "pcap_parser/save_file"
 require "pcap_parser/packet"
 require "pcap_parser/linktype"
 require "pcap_parser/ethertype"
+require "pcap_parser/proto"
 
 
 module PcapParser

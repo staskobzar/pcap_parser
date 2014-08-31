@@ -18,6 +18,7 @@ describe Ethertype::IPv4 do
       it{expect(ipv4.proto).to eq(0x11)}
       it{expect(ipv4.chsum).to eq(0xf449)}
       it{expect(ipv4).to be_valid}
+      it{expect(ipv4).to be_proto_supported}
       it{expect(ipv4.ip_src).to eq('10.130.8.20')}
       it{expect(ipv4.ip_src_long).to eq(176293908)}
       it{expect(ipv4.ip_dst).to eq('10.132.40.34')}

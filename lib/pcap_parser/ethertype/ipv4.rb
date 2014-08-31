@@ -70,6 +70,10 @@ module PcapParser
         ((sum>>16) + (sum & 0xffff)) == 0xffff
       end
 
+      def proto_supported?
+        PROTO.keys.include? proto
+      end
+
       def ip_src_long
         @hexstr[12..15].unpack("N").pop
       end
