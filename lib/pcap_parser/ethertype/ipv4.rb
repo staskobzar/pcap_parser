@@ -4,6 +4,12 @@ module PcapParser
     # IP protocal version 4
     # Always big-endian (networking) byte order
     class IPv4
+
+      attr_reader :options
+      # IPv4 header length is 20 bytes
+      LEN = 20
+      def self.len; LEN; end
+
       def initialize(hex_string)
         @hexstr=hex_string
       end
@@ -90,6 +96,11 @@ module PcapParser
         Array(0..3).reverse.
           map{|x| (ip_int >>(x<<3)) & 0xff}.
           join ?.
+      end
+
+      # set options
+      def options=(hex)
+        @options = hex.unpack("n")
       end
     end
   end

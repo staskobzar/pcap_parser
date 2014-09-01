@@ -17,3 +17,7 @@ RSpec.configure do |cfg|
     expectations.syntax = :expect
   end
 end
+
+def pcap_sample(name)
+  File.expand_path("pcap_samples/#{name}.pcap",File.dirname(__FILE__))
+end
