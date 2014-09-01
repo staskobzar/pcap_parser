@@ -1,6 +1,9 @@
 module PcapParser
   module Linktype
     class Ethernet
+
+      LENGTH = 14
+
       def initialize(stream)
         @stream = stream
       end
@@ -33,6 +36,7 @@ module PcapParser
         raise EtherTypeNotSupported if ETHER_TYPE[ethertype].nil?
         ethertype
       end
+
     end
   end
 end

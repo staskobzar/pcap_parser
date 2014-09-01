@@ -7,8 +7,7 @@ module PcapParser
 
       attr_reader :options
       # IPv4 header length is 20 bytes
-      LEN = 20
-      def self.len; LEN; end
+      LENGTH = 20
 
       def initialize(hex_string)
         @hexstr=hex_string

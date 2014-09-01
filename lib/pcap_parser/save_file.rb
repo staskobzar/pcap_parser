@@ -17,11 +17,16 @@ module PcapParser
       set_file_attr
     end
 
+    def each_packet
+      yield read_packet until @stream.eof?
+    end
+
     def read_packet
       @packet = Packet.new @stream
       linktype.read
       read_ethertype
       read_proto
+      read_padding
       self
     end
     private
@@ -55,17 +60,30 @@ module PcapParser
 
       def read_ethertype
         etype = ETHER_TYPE[linktype.ether_type]
-        hexstr = @stream.read_raw etype.len
+        hexstr = @stream.read_raw etype::LENGTH
         @ethertype = etype.new hexstr
-        if etype.kind_of?(Ethertype::IPv4) && @ethertype.has_opts?
-          @ethertype.options = @stream.read_raw(@ethertype.header_len - @ethertype.len)
+        if etype.kind_of?(Ethertype::IPv4) && ethertype.has_opts?
+          ethertype.options = @stream.read_raw(ethertype.header_len - etype::LENGTH)
         end
       end
 
       def read_proto
         etype = ETHER_TYPE[linktype.ether_type]
         if ethertype.proto_supported?
-          @proto=PROTO[ethertype.proto].new @stream.read_raw(ethertype.length - etype.len)
+          @proto=PROTO[ethertype.proto].new @stream.read_raw(ethertype.length - etype::LENGTH)
+        else
+          raise ProtoNotSupported
+        end
+      end
+
+      # packet padding if length is <=60
+      def read_padding
+        if packet.cap_len <= 60
+          @stream.read_raw(packet.cap_len - 
+                           LINK_TYPE[network]::LENGTH -
+                           ETHER_TYPE[linktype.ether_type]::LENGTH -
+                           proto.length
+                          )
         end
       end
   end

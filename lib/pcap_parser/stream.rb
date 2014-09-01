@@ -62,6 +62,8 @@ module PcapParser
       @file.read len
     end
 
+    def eof?; @file.eof?;end
+
     private
       # Set magic number of file.
       def set_magic

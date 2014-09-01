@@ -21,4 +21,13 @@ module PcapParser
 
   # Raise when ether type is not supported
   class EtherTypeNotSupported < StandardError; end
+
+  # Raise when protocol is not supported
+  class ProtoNotSupported < StandardError; end
+
+  def self.read(file)
+    SaveFile.new(file).each_packet do |packet|
+      yield packet
+    end
+  end
 end

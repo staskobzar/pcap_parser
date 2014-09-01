@@ -73,4 +73,19 @@ describe SaveFile do
     it{expect(pcap.proto.data).to match(/Call-ID: ced7ac50-1eb55938-114fc070@10\.132\.88\.62/)}
     it{expect(pcap.proto.data).to match(/Content-Length: 0\r\n\r\n$/)}
   end
+
+  describe "#each_packet" do
+    it "read file ethernet udp and count of packets is 5" do
+      savefile = SaveFile.new pcap_sample("udp_sip")
+      ips = %w{10.132.88.62 10.130.8.20 10.164.121.7 10.160.160.71 10.130.8.20}
+      ports = [5060,5060,53353,59416,5060]
+      frames = 0
+      savefile.each_packet do |packet|
+        expect(packet.ethertype.ip_src).to eq(ips.shift)
+        expect(packet.proto.port_src).to eq(ports.shift)
+        frames = frames.succ
+      end
+      expect(frames).to eq(5)
+    end
+  end
 end
