@@ -64,6 +64,10 @@ module PcapParser
 
     def eof?; @file.eof?;end
 
+    def self.bit_set?(byte,bit)
+      byte.unpack("C").pop >> (8 - bit) & 0b1 == 1
+    end
+
     private
       # Set magic number of file.
       def set_magic

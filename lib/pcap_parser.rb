@@ -25,9 +25,6 @@ module PcapParser
   # Raise when protocol is not supported
   class ProtoNotSupported < StandardError; end
 
-  # Raise when called invalid TCP packet flag
-  class InvalidTCPFlag < StandardError; end
-
   def self.read(file)
     SaveFile.new(file).each_packet do |packet|
       yield packet

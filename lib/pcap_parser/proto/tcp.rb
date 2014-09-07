@@ -27,37 +27,8 @@ module PcapParser
       end
 
       def [](flag)
-        case flag
-        when :NS
-          # ECN-nonce concealment protection
-          (@binhdr[12,1].unpack("C").pop & 7) == 1
-        when :CWR
-          # Congestion Window Reduced
-          (@binhdr[13,1].unpack("C").pop >> 7) == 1
-        when :ECE
-          # ECN-Echo
-          ((@binhdr[13,1].unpack("C").pop >> 6) & 0b1 ) == 1
-        when :URG
-          # Urgent pointer
-          ((@binhdr[13,1].unpack("C").pop >> 5) & 0b1 ) == 1
-        when :ACK
-          # Acknowledgment
-          ((@binhdr[13,1].unpack("C").pop >> 4) & 0b1 ) == 1
-        when :PSH
-          # Push function
-          ((@binhdr[13,1].unpack("C").pop >> 3) & 0b1 ) == 1
-        when :RST
-          # Reset the connection
-          ((@binhdr[13,1].unpack("C").pop >> 2) & 0b1 ) == 1
-        when :SYN
-          # Synchronize sequence numbers
-          ((@binhdr[13,1].unpack("C").pop >> 1) & 0b1 ) == 1
-        when :FIN
-          # No more data from sender
-          (@binhdr[13,1].unpack("C").pop & 0b1 ) == 1
-        else
-          raise InvalidTCPFlag
-        end
+        bit = {NS:8, CWR:1, ECE:2, URG:3, ACK:4, PSH:5, RST:6, SYN:7, FIN:8}
+        Stream::bit_set?( @binhdr[ flag.eql?(:NS) ? 12 : 13 ], bit[flag])
       end
 
       def win_size
