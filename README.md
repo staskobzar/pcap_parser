@@ -1,13 +1,16 @@
 # PcapParser
 
-TODO: Write a gem description
+Simple library to parse libpcap format files with pure ruby. 
+This is personal project just to learn deeper network packets structure.
+It works pretty well but there are more mature libraries like [PacketFu](https://github.com/packetfu/packetfu) 
+with more options.
 
 ## Installation
 
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'pcap_parser'
+gem 'pcap_parser', source: 'git@github.com:staskobzar/pcap_parser.git'
 ```
 
 And then execute:
@@ -18,9 +21,29 @@ Or install it yourself as:
 
     $ gem install pcap_parser
 
-## Usage
+## Supported protocols
+* Link protocols: Ethernet
+* Internet protocols: IPv4, ICMP
+* Transport protocols: TCP, UDP
 
-TODO: Write usage instructions here
+## Usage
+```ruby
+require 'pcap_parser'
+PcapParser.read("tcp-pcap-file.pcap") do |pcap|
+  # PCAP frame
+  puts "Packet reveiver at #{Time.at(pcap.packet.sec).strftime("%H:%M:%S")} microseconds: #{pcap.packet.usec}"
+  puts "Packet length is #{pcap.packet.cap_len}"
+  # Linktype (Ethernet)
+  puts "- Link type #{pcap.linktype.class}"
+  puts "- Ethernet source mac: #{pcap.linktype.mac_src}, destination mac: #{pcap.linktype.mac_dest}"
+  # Internet protocol
+  puts "-- Ethertype protocol #{pcap.ethertype.class}"
+  puts "-- Ethertype Source IP: #{pcap.ethertype.ip_src}; Dest IP: #{pcap.ethertype.ip_dst}"
+  puts "-- Ethertype packet length: #{pcap.ethertype.length}"
+  # Transport protocol (UDP, TCP etc)
+  puts "--- Transport protocol #{pcap.proto.class}"
+end
+```
 
 ## Contributing
 
