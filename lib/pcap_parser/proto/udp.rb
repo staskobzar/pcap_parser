@@ -29,10 +29,8 @@ module PcapParser
       # http://en.wikipedia.org/wiki/User_Datagram_Protocol
       def valid?
         return true if chsum == 0
-        sum = @binhdr.unpack("n4").reduce(0) do |res,x|
-          ((res + x)>>0x10) + ((res + x) & 0xffff)
-        end
-        # flit bits in result sum 
+        sum = Proto::sum_pack_16int @binhdr.unpack("n4")
+        # flit bits in result sum
         # result is th two's complement so to convert we remove 1
         flipped = [sum * -1].pack("n").unpack("n").pop - 1
         0xffff == flipped + sum

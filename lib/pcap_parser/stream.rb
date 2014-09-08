@@ -74,7 +74,7 @@ module PcapParser
       def set_magic
         mchars = @file.read(4).unpack("C*")
         mchars.reverse! if is_sys_le?
-        @magic = mchars.map.with_index{ |x, i| x<<(i<<3) }.inject :+
+        @magic = mchars.map.with_index { |x, i| x<<(i<<3) }.inject :+
         byte_order
       end
 

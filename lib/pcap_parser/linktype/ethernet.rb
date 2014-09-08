@@ -27,12 +27,12 @@ module PcapParser
       def mac_src; mac2str @src_mac; end
 
       def mac2str(mac)
-        mac.map{ |o| "%02x" % o }.join ?:
+        mac.map { |o| "%02x" % o }.join ?:
       end
 
       def ether_type
         ether = @stream.little_endian? ? @ether_raw.reverse : @ether_raw
-        ethertype = ether.map.with_index{ |x, i| x<<(i<<3) }.inject :+
+        ethertype = ether.map.with_index { |x, i| x<<(i<<3) }.inject :+
         raise EtherTypeNotSupported if ETHER_TYPE[ethertype].nil?
         ethertype
       end

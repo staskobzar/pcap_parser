@@ -19,5 +19,5 @@ RSpec.configure do |cfg|
 end
 
 def pcap_sample(name)
-  File.expand_path("pcap_samples/#{name}.pcap",File.dirname(__FILE__))
+  File.expand_path("pcap_samples/#{name}.pcap", File.dirname(__FILE__))
 end

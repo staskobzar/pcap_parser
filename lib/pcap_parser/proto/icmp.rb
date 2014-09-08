@@ -18,9 +18,7 @@ module PcapParser
       end
 
       def valid?
-        0xffff == @binhdr.unpack("n*").reduce(0) do |res,x|
-          ((res + x)>>0x10) + ((res + x) & 0xffff)
-        end 
+        0xffff == Proto::sum_pack_16int(@binhdr.unpack("n*"))
       end
     end
   end
