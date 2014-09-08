@@ -6,12 +6,10 @@ require "pcap_parser/linktype"
 require "pcap_parser/ethertype"
 require "pcap_parser/proto"
 
-
 module PcapParser
   # Exceptions
-
   # Raise when pcap file is invalid
-  class InvalidPcapFile < StandardError;end
+  class InvalidPcapFile < StandardError; end
 
   # Raise when pcap file is too short
   class PcapFileTooShort < StandardError; end

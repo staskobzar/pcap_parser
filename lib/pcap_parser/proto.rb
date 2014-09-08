@@ -10,4 +10,3 @@ module PcapParser
     0x11 => Proto::UDP,
   }
 end
-

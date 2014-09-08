@@ -1,6 +1,5 @@
 module PcapParser
   class SaveFile
-
     attr_reader :version
     attr_reader :tz_offset
     attr_reader :tz_accur
@@ -41,7 +40,7 @@ module PcapParser
 
       # Setup file version
       def set_version
-        min,maj = @stream.read_int16(2)
+        min, maj = @stream.read_int16(2)
         @version = "#{min}.#{maj}"
       end
 
@@ -70,7 +69,7 @@ module PcapParser
       def read_proto
         etype = ETHER_TYPE[linktype.ether_type]
         if ethertype.proto_supported?
-          @proto=PROTO[ethertype.proto].new @stream.read_raw(ethertype.length - etype::LENGTH)
+          @proto = PROTO[ethertype.proto].new @stream.read_raw(ethertype.length - etype::LENGTH)
         else
           raise ProtoNotSupported
         end
@@ -79,7 +78,7 @@ module PcapParser
       # packet padding if length is <=60
       def read_padding
         if packet.cap_len <= 60
-          @stream.read_raw(packet.cap_len - 
+          @stream.read_raw(packet.cap_len -
                            LINK_TYPE[network]::LENGTH -
                            ETHER_TYPE[linktype.ether_type]::LENGTH -
                            proto.length

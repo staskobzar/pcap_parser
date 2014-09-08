@@ -2,7 +2,7 @@ module PcapParser
   module Proto
     class ICMP
       def initialize(bin_header)
-        @binhdr=bin_header
+        @binhdr = bin_header
       end
 
       def type
@@ -14,15 +14,14 @@ module PcapParser
       end
 
       def chsum
-        @binhdr[2,2].unpack("n").pop
+        @binhdr[2, 2].unpack("n").pop
       end
 
       def valid?
-        0xffff == @binhdr.unpack("n*").reduce(0) do |res,x| 
-          res = ((res + x)>>0x10) + ((res + x) & 0xffff)
+        0xffff == @binhdr.unpack("n*").reduce(0) do |res,x|
+          ((res + x)>>0x10) + ((res + x) & 0xffff)
         end 
       end
     end
   end
 end
-

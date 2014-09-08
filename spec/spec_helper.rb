@@ -11,7 +11,7 @@ include PcapParser
 
 Dir["./spec/support/**/*.rb"].each { |f| require f }
 RSpec.configure do |cfg|
-    cfg.filter_run :focus => true
+    cfg.filter_run focus: true
     cfg.run_all_when_everything_filtered = true
     cfg.expect_with :rspec do |expectations|
     expectations.syntax = :expect

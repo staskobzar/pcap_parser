@@ -14,7 +14,7 @@ module PcapParser
       @file = file
       set_magic
       raise PcapFileTooShort if @file.read(20).length < 20
-      @file.pos=4
+      @file.pos = 4
     end
 
     # File byte order
@@ -29,32 +29,33 @@ module PcapParser
     end
 
     # Is file byte order little-endian?
-    def little_endian?; byte_order.equal? LittleEndian;end
+    def little_endian?; byte_order.equal? LittleEndian; end
 
     # Is file byte order big-endian?
     def big_endian?; byte_order.equal? BigEndian; end
 
     # Seconds subtract fraction
     def sec_subt
-      if [PCAP_MAGIC_BE_NSEC,PCAP_MAGIC_LE_NSEC].include? magic
+      if [PCAP_MAGIC_BE_NSEC, PCAP_MAGIC_LE_NSEC].include? magic
         10**-9
       else
         10**-6
       end
     end
 
-    def int16(len=1); ntoh_int(16,len); end
-    def int32(len=1); ntoh_int(32,len); end
+    def int16(len = 1); ntoh_int(16, len); end
 
-    def read_int16(len=1);
-      @file.read(len*2).unpack int16(len)
+    def int32(len = 1); ntoh_int(32, len); end
+
+    def read_int16(len = 1);
+      @file.read(len * 2).unpack int16(len)
     end
 
-    def read_int32(len=1)
-      @file.read(len*4).unpack int32(len)
+    def read_int32(len = 1)
+      @file.read(len * 4).unpack int32(len)
     end
 
-    def read_char(len=1)
+    def read_char(len = 1)
       @file.read(len).unpack("C*")
     end
 
@@ -62,9 +63,9 @@ module PcapParser
       @file.read len
     end
 
-    def eof?; @file.eof?;end
+    def eof?; @file.eof?; end
 
-    def self.bit_set?(byte,bit)
+    def self.bit_set?(byte, bit)
       byte.unpack("C").pop >> (8 - bit) & 0b1 == 1
     end
 
@@ -73,28 +74,25 @@ module PcapParser
       def set_magic
         mchars = @file.read(4).unpack("C*")
         mchars.reverse! if is_sys_le?
-        @magic = mchars.map.with_index{|x,i| x<<(i<<3)}.inject :+
+        @magic = mchars.map.with_index{ |x, i| x<<(i<<3) }.inject :+
         byte_order
       end
 
       # System byte order
       def sys_byte_order
-        if [0x1a2b3c4d].pack("I").eql? [0x1a2b3c4d].pack("V")
-          LittleEndian
-        end
+        LittleEndian if [0x1a2b3c4d].pack("I").eql? [0x1a2b3c4d].pack("V")
       end
 
       # Is system byte order is little-endian
       def is_sys_le?; sys_byte_order.equal? LittleEndian; end
 
       # Int 16/32 big/little endian compliance
-      def ntoh_int(bit,len)
+      def ntoh_int(bit, len)
         if little_endian?
           bit.eql?(16) ? "v" : "V"
         else
           bit.eql?(16) ? "n" : "N"
         end * len
       end
-
   end
 end

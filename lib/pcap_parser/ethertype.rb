@@ -6,4 +6,3 @@ module PcapParser
     0x0800 => Ethertype::IPv4
   }
 end
-
