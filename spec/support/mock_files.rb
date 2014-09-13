@@ -1,53 +1,63 @@
+# Stub new save file stream
 def new_savefile(header)
   io = StringIO.new header
   expect(File).to receive(:open).and_return io
   SaveFile.new "file.pcap"
 end
 
+# Stub pcap file header with little-endian byte order
 def vector_le_usec
   "\xD4\xC3\xB2\xA1\x02\x00\x04\x00" +
   "\x00\x00\x00\x00\x00\x00\x00\x00" +
   "\xFF\xFF\x00\x00\x01\x00\x00\x00"
 end
 
+# Little-Endian with microseconds
 def sample_little_endian_usec
   header = vector_le_usec
   new_savefile header
 end
 
+# Stub pcap file header with little-endian byte order
 def vector_le_nsec
   "\x4D\x3C\xB2\xA1\x02\x00\x04\x00" +
   "\x00\x00\x00\x00\x00\x00\x00\x00" +
   "\xFF\xFF\x00\x00\x01\x00\x00\x00"
 end
 
+# Little-Endian with nanoseconds
 def sample_little_endian_nsec
   header = vector_le_nsec
   new_savefile header
 end
 
+# Big-Endian with microseconds
 def vector_be_usec
   "\xA1\xB2\xC3\xD4\x00\x02\x00\x04" +
   "\x00\x00\x00\x00\x00\x00\x00\x00" +
   "\x00\x00\xFF\xFF\x00\x00\x00\x01"
 end
 
+# Big-Endian with microseconds
 def sample_big_endian_usec
   header = vector_be_usec
   new_savefile header
 end
 
+# Big-Endian with nanoseconds
 def vector_be_nsec
   "\xA1\xB2<M\x00\x02\x00\x04" +
   "\x00\x00\x00\x00\x00\x00\x00\x00" +
   "\x00\x00\xFF\xFF\x00\x00\x00\x01"
 end
 
+# Big-Endian with nanoseconds
 def sample_big_endian_nsec
   header = vector_be_nsec
   new_savefile header
 end
 
+# Stub invalid pcap file
 def sample_none_pcap_file
   header = "\x1A\xB2\x3C\xD4\x00\x00\x00\x00" +
           "\x00\x00\x00\x00\x00\x00\x00\x00" +
@@ -55,36 +65,42 @@ def sample_none_pcap_file
   new_savefile header
 end
 
+# Per-packet little-endian with microseconds
 def sample_packhdr_le_usec
   "\xD4\xC3\xB2\xA1" +
   "\x8Ab\xD2S\x1Fh\x0E\x00f\x01\x00\x00f\x01\x00\x00" +
   "\x00\x00\xFF\xFF\x00\x00\x00\x01" # padding
 end
 
+# Per-packet big-endian with microseconds
 def sample_packhdr_be_usec
   "\xA1\xB2\xC3\xD4" +
   "S\xD2b\x8A\x00\x0Eh\x1F\x00\x00\x01f\x00\x00\x01f" +
   "\x00\x00\xFF\xFF\x00\x00\x00\x01" # padding
 end
 
+# Per-packet little-endian with nanoseconds
 def sample_packhdr_le_nsec
   "\x4D\x3C\xB2\xA1" +
   "'n\xFES)\xA06)\x1F\x02\x00\x00\x1F\x02\x00\x00" +
   "\x00\x00\xFF\xFF\x00\x00\x00\x01" # padding
 end
 
+# Per-packet big-endian with nanoseconds
 def sample_packhdr_be_nsec
   "\xA1\xB2<M" +
   "S\xFEn')6\xA0)\x00\x00\x02\x1F\x00\x00\x02\x1F" +
   "\x00\x00\xFF\xFF\x00\x00\x00\x01" # padding
 end
 
+# Link type binary string little-endian with microseconds
 def sample_linktype_ether_le_usec
   "\xD4\xC3\xB2\xA1" +
   "\x00\x11\xAA\x1A\"+\xCC\xC9\xDD\xD8\x00\a\b\x00" +
   "\x00\x00\xFF\xFF\x00\x00\x00\x01" # padding
 end
 
+# UDP packet binary string
 def sample_udp_packet
   "\x13\xC4\x13\xC4\x01DF\x91SIP/2.0 200 OK\r\nVia: SIP/2.0/UDP 10.132.40.34:5060;branc" +
   "h=z9hG4bK33062aaec5ca2abf9\r\nFrom: <sip:8487@campus.voip.etsmtl.c" +
@@ -94,6 +110,7 @@ def sample_udp_packet
   "\r\n\r\n"
 end
 
+# TCP packet binary string
 def sample_tcp_packet
   "\n6\xA6w\xC8\vu\xE1\x18GET /wiki/Transmission_Control_Protocol HTTP/1.1"  +
   "\r\nHost: en.wikipedia.org\r\nConnection: keep-alive\r\nCache-Control: "  +
@@ -112,22 +129,26 @@ def sample_tcp_packet
   "ied-Since: Sun, 31 Aug 2014 16:41:06 GMT\r\n\r\n"
 end
 
+# TCP packet binary string
 def sample_tcp_packet_1
   "\xD9?\x00P\xD3\x19i\x93\x11\xAD\x9D-\x80\x18 X\x97\xBC\x00\x00\x01\x01\b" +
   sample_tcp_packet
 end
 
+# TCP packet binary string
 def sample_tcp_packet_2
   "\xD9?\x00P\xD3\x19i\x93\x11\xAD\x9D-QJ X\x97\xBC\x00\x00\x01\x01\b" +
   sample_tcp_packet
 end
 
+# ICMP packet time exceeded type
 def sample_icmp_ttle
   "\v\x00\xC7u\x00\x00\x00\x00E\x00\x004\xE6\x8A\x00\x00\x01\x11\x00\xEB\xC0" +
   "\xA8\x01\x8C\b\b\b\b\xE6\x88\x82\x9C\x00 \xC4D\x00\x00\x00\x00\x00\x00"    +
   "\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"
 end
 
+# ICMP packet echo type
 def sample_icmp_echo
   "\b\x00\x15H\xA5h\x00\x00T\v!H\x00\x04\xDC\xF4\b\t\n\v\f\r\x0E\x0F\x10\x11" +
   "\x12\x13\x14\x15\x16\x17\x18\x19\x1A\e\x1C\x1D\x1E\x1F !\"\#$%&'()*+,-./01234567"

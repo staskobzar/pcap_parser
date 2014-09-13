@@ -1,5 +1,9 @@
 # PcapParser
 
+[![Code Climate](https://codeclimate.com/github/staskobzar/pcap_parser/badges/gpa.svg)](https://codeclimate.com/github/staskobzar/pcap_parser)
+
+[![Test Coverage](https://codeclimate.com/github/staskobzar/pcap_parser/badges/coverage.svg)](https://codeclimate.com/github/staskobzar/pcap_parser)
+
 Simple library to parse libpcap format files with pure ruby. 
 This is personal project just to learn deeper network packets structure.
 It works pretty well but there are more mature libraries like [PacketFu](https://github.com/packetfu/packetfu) 

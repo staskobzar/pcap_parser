@@ -1,4 +1,6 @@
 module PcapParser
+  # Current IO stream referencing pcap file.
+  # Provides interface to read bin data from stream.
   class Stream
     LittleEndian  = :little_endian
     BigEndian     = :big_endian
@@ -17,7 +19,7 @@ module PcapParser
       @file.pos = 4
     end
 
-    # File byte order
+    # File byte order: little-endian or big-indian
     def byte_order
       if [PCAP_MAGIC_LE, PCAP_MAGIC_LE_NSEC].include? magic
         LittleEndian
@@ -29,10 +31,14 @@ module PcapParser
     end
 
     # Is file byte order little-endian?
-    def little_endian?; byte_order.equal? LittleEndian; end
+    def little_endian?
+      byte_order.equal? LittleEndian
+    end
 
     # Is file byte order big-endian?
-    def big_endian?; byte_order.equal? BigEndian; end
+    def big_endian?
+      byte_order.equal? BigEndian
+    end
 
     # Seconds subtract fraction
     def sec_subt
@@ -43,28 +49,61 @@ module PcapParser
       end
     end
 
-    def int16(len = 1); ntoh_int(16, len); end
+    # Read 16bit Integer template string ("v" or "n") 
+    # respecting file endianess.
+    # @param len [Integer]
+    # @return [String] template string len long
+    def int16(len = 1)
+      ntoh_int(16, len)
+    end
 
-    def int32(len = 1); ntoh_int(32, len); end
+    # Read 32bit Integer template string ("V" or "N") 
+    # respecting file endianess.
+    # @param len [Integer]
+    # @return [String] template string len long
+    def int32(len = 1)
+      ntoh_int(32, len)
+    end
 
-    def read_int16(len = 1);
+    # Read 16bit Integer array from binary stream
+    # respecting file endianess.
+    # @param len [Integer]
+    # @return [Array] 16bit integers
+    def read_int16(len = 1)
       @file.read(len * 2).unpack int16(len)
     end
 
+    # Read 32bit Integer array from binary stream
+    # respecting file endianess.
+    # @param len [Integer]
+    # @return [Array] 32bit integers
     def read_int32(len = 1)
       @file.read(len * 4).unpack int32(len)
     end
 
+    # Read unsigned char array from binary stream.
+    # @param len [Integer]
+    # @return [Array] 8bit characters array
     def read_char(len = 1)
       @file.read(len).unpack("C*")
     end
 
+    # Read raw binary string from stream.
+    # @param len [Integer]
+    # @return [String]
     def read_raw(len)
       @file.read len
     end
 
-    def eof?; @file.eof?; end
+    # Check if end of stream.
+    # @return [true, false]
+    def eof?
+      @file.eof?
+    end
 
+    # Check if bit is set (equals 1) in 8bit char.
+    # @param byte [Char]
+    # @param bit  [Integer] 0 to 8 bit position in char
     def self.bit_set?(byte, bit)
       byte.unpack("C").pop >> (8 - bit) & 0b1 == 1
     end

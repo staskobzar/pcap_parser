@@ -6,6 +6,7 @@ require "pcap_parser/linktype"
 require "pcap_parser/ethertype"
 require "pcap_parser/proto"
 
+# Simple library to parse libpcap format files with pure ruby.
 module PcapParser
   # Exceptions
   # Raise when pcap file is invalid
@@ -23,6 +24,9 @@ module PcapParser
   # Raise when protocol is not supported
   class ProtoNotSupported < StandardError; end
 
+  # Read packets from pcap file.
+  # Expects block to process each packet.
+  # @param file [String] pcap file path
   def self.read(file)
     SaveFile.new(file).each_packet do |packet|
       yield packet
