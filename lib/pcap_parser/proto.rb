@@ -2,8 +2,9 @@ require_relative 'proto/udp'
 require_relative 'proto/tcp'
 require_relative 'proto/icmp'
 module PcapParser
+  # Transport layer protocols family.
+  # TCP, UDP, ICMP etc.
   module Proto
-
     # Calculate sum of all 16bit integers in packet
     # as one's complement 16bit integer.
     # Used to calculate check sum  RFC 1071.
@@ -16,6 +17,7 @@ module PcapParser
     end
   end
 
+  # Protocols supported
   PROTO = {
     0x01 => Proto::ICMP,
     0x06 => Proto::TCP,

@@ -78,7 +78,7 @@ describe SaveFile do
     it "read file ethernet udp and count of packets is 5" do
       savefile = SaveFile.new pcap_sample("udp_sip")
       ips = %w{10.132.88.62 10.130.8.20 10.164.121.7 10.160.160.71 10.130.8.20}
-      ports = [5060,5060,53353,59416,5060]
+      ports = [5060, 5060, 53353, 59416, 5060]
       frames = 0
       savefile.each_packet do |packet|
         expect(packet.ethertype.ip_src).to eq(ips.shift)

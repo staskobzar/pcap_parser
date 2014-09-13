@@ -2,12 +2,18 @@ module PcapParser
   # Current IO stream referencing pcap file.
   # Provides interface to read bin data from stream.
   class Stream
+    # Little-endian byte order flag
     LittleEndian  = :little_endian
+    # Big-endian byte order flag
     BigEndian     = :big_endian
 
+    # Big-Endians with microseconds magic number
     PCAP_MAGIC_BE       = 0xa1b2c3d4
+    # Little-Endians with microseconds magic number
     PCAP_MAGIC_LE       = 0xd4c3b2a1
+    # Big-Endians with nanoseconds magic number
     PCAP_MAGIC_BE_NSEC  = 0xa1b23c4d
+    # Little-Endians with nanoseconds magic number
     PCAP_MAGIC_LE_NSEC  = 0x4d3cb2a1
 
     attr_reader :magic
@@ -49,7 +55,7 @@ module PcapParser
       end
     end
 
-    # Read 16bit Integer template string ("v" or "n") 
+    # Read 16bit Integer template string ("v" or "n")
     # respecting file endianess.
     # @param len [Integer]
     # @return [String] template string len long

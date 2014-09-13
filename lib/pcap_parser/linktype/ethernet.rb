@@ -3,6 +3,7 @@ module PcapParser
     # Ethernet frame
     # see: http://en.wikipedia.org/wiki/Ethernet_frame#Structure
     class Ethernet
+      # Ethernet packet length in bytes
       LENGTH = 14
 
       def initialize(stream)

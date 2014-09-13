@@ -20,7 +20,7 @@ module PcapParser
     end
 
     # Loop through all packets in the file.
-    # Expects block as an argument. 
+    # Expects block as an argument.
     # Example:
     # ```
     # SaveFile.each_packet |packet| do
